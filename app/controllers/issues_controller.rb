@@ -66,15 +66,15 @@ class IssuesController < ApplicationController
   end
 
   def update_issue_params
-    @issue.name = params[:name]
-    @issue.priority = params[:priority]
-    @issue.story_points = params[:storyPoints]
-    @issue.sprint = params[:sprint]
-    @issue.label = params[:label]
-    @issue.description = params[:description]
-    @issue.environment = params[:environment]
-    @issue.asignee_id = params[:asignee]
-    @issue.status = params[:status]
+    @issue.name = params[:name] || @issue.name
+    @issue.priority = params[:priority] || @issue.priority
+    @issue.story_points = params[:storyPoints] || @issue.story_points
+    @issue.sprint = params[:sprint] || @issue.sprint
+    @issue.label = params[:label] || @issue.label
+    @issue.description = params[:description] || @issue.description
+    @issue.environment = params[:environment] || @issue.environment
+    @issue.asignee_id = params[:asignee] || @issue.asignee_id
+    @issue.status = params[:status] || @issue.status
   end
 
   def get_project
