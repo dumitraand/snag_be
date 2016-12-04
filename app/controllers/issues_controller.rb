@@ -29,7 +29,7 @@ class IssuesController < ApplicationController
   end
 
   def get_issue
-    return if !get_issue
+    return if !get_issue_by_id
     return if !check_user_project :issue => @issue
     respond_to do |format|
       format.json {render :json => @issue.as_json(except: [:created_at, :updated_at])}
@@ -37,7 +37,7 @@ class IssuesController < ApplicationController
   end
 
   def update_issue
-    return if !get_issue
+    return if !get_issue_by_id
     return if !check_user_project :issue => @issue
     update_issue_params
     if @issue.save
@@ -93,7 +93,7 @@ class IssuesController < ApplicationController
     return true
   end
 
-  def get_issue
+  def get_issue_by_id
     @issue = Issue.find_by(:id => params[:issue_id])
     if !@issue.present?
       respond_to do |format|
