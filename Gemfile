@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 
+gem 'faker', '~> 1.6.6'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
