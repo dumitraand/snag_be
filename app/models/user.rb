@@ -42,5 +42,14 @@ class User < ActiveRecord::Base
       return nil
     end
   end
+
+  def self.check_token(token)
+    begin
+      decoded_token = JWT.decode token, HMAC_SECRET, true, { :algorithm => 'HS256' }
+      return User.find_by_username(decoded_token.first["data"]["username"])
+    rescue JWT::ExpiredSignature
+      false
+    end
+  end
   ## /CLASS METHODS
 end

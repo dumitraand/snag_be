@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.json {
           render :json => {
-            loginError: "No such user or wrong password!"
+            errorMessage: "No such user or wrong password!"
           }.to_json,
           status: 400
         }
