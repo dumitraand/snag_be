@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
 
   SUPERUSER = 1
   USER = 2
-  HMAC_SECRET = "cizu$$r@ullz123"
 
   ## CLASS METHODS
   def self.fmt(u, token)
@@ -34,9 +33,9 @@ class User < ActiveRecord::Base
   def self.login(username, password)
     u = User.find_by_username(username)
     if u.present? && u.authenticate(password)
-      exp = Time.now.to_i + 12 * 3600
+      exp = Time.now.to_i + ENV["EXP_HOURS"].to_i * 3600
       exp_payload = { :data => {:username => u.username}, :exp => exp }
-      token = JWT.encode exp_payload, HMAC_SECRET, 'HS256'
+      token = JWT.encode exp_payload, ENV["HMAC_SECRET"], 'HS256'
       return u, token
     else
       return nil
@@ -45,7 +44,7 @@ class User < ActiveRecord::Base
 
   def self.check_token(token)
     begin
-      decoded_token = JWT.decode token, HMAC_SECRET, true, { :algorithm => 'HS256' }
+      decoded_token = JWT.decode token, ENV["HMAC_SECRET"], true, { :algorithm => 'HS256' }
       return User.find_by_username(decoded_token.first["data"]["username"])
     rescue JWT::ExpiredSignature
       false
