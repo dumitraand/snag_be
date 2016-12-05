@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :user_projects
   has_many :projects, through: :user_projects
   has_many :reported_issues, class_name: "Issue", foreign_key: "reporter_id"
-  has_many :asigned_issues, class_name: "Issue", foreign_key: "asignee_id"
+  has_many :asigned_issues, class_name: "Issue", foreign_key: "assignee_id"
 
   SUPERUSER = 1
   USER = 2
