@@ -73,7 +73,7 @@ class IssuesController < ApplicationController
     @issue.label = params[:label] || @issue.label
     @issue.description = params[:description] || @issue.description
     @issue.environment = params[:environment] || @issue.environment
-    @issue.asignee_id = params[:asignee] || @issue.asignee_id
+    @issue.asignee_id = params[:asignee_id] || @issue.asignee_id
     @issue.status = params[:status] || @issue.status
   end
 
