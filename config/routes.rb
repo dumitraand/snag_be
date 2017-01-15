@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   match "api/v1/projects/:project_id/issues" => "issues#create_project_issue", via: [:post, :options]
   match "api/v1/issues/:issue_id" => "issues#get_issue", via: [:get, :options]
   match "api/v1/issues/:issue_id" => "issues#update_issue", via: [:patch, :options]
+
+  match "api/v1/user/:user_id" => "users#get_user_by_id", via: [:get, :options]
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
