@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   respond_to :json
-  before_action :authenticate, :only => [:get_user_by_id]
+  before_action :authenticate, :only => [:get_user_by_id, :get_user_by_username]
 
   def login
     u, token = User.login(params[:username], params[:password])
@@ -23,6 +23,25 @@ class UsersController < ApplicationController
   def get_user_by_id
     id = params[:user_id]
     u = User.find_by_id(id)
+    if u.present?
+      respond_to do |format|
+        format.json {render :json => User.fmt(u, nil).except(:token)}
+      end
+    else
+      respond_to do |format|
+        format.json {
+          render :json => {
+            errorMessage: "No such user!"
+          }.to_json,
+          status: 400
+        }
+      end
+    end
+  end
+
+  def get_user_by_username
+    username = params[:username]
+    u = User.find_by_username(username)
     if u.present?
       respond_to do |format|
         format.json {render :json => User.fmt(u, nil).except(:token)}
